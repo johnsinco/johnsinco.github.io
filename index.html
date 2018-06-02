@@ -13,6 +13,9 @@
     <title>John Stewart - Software Development and Consulting</title>
 
     <link rel="canonical" href="https://johnsinco.github.io/">
+    <script crossorigin src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.26.0/babel.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react@16/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.production.min.js"></script>
 
     <link  rel="stylesheet" href="https://fonts.googleapis.com/css?family=Fira+Mono:400,700">
     <link rel="stylesheet" href="//cdn.rawgit.com/necolas/normalize.css/master/normalize.css">
@@ -53,7 +56,7 @@
 
       <div class="content">
         
-  <section class="container centered">
+  <section class="container centered" style="flex-direction: column">
   <div class="about">
     <h1>John Stewart</h1>
     <h2>John Stewart is a Software Engineer and Leader with 15 years experience delivering results for organizations and clients.</h2>
@@ -69,7 +72,57 @@
     </ul>
     
   </div>
+  <div style="padding-top:50px" id="cats">
+    <p>CATS HERE!</p>
+  </div>
 </section>
+
+<script type="text/babel">
+  class CatShow extends React.Component {
+    constructor(props) {
+      super(props);
+      this.state = {catid: 11111}
+    }
+    componentWillMount() {
+      this.interval = setInterval(() => {
+        console.log("reloading...");
+        this.setState({catid: Math.floor(Math.random() * 100)});
+        // fetch("http://thecatapi.com/api/images/get?format=xml&type=gif&size=small",
+        //       {mode: 'no-cors'})
+        // .then(
+        //   (result) => {
+        //     console.log('........')
+        //     console.log(result);
+        //     let responseDoc = new DOMParser().parseFromString(result.body, 'application/xml');
+        //     // let caturl = responseDoc.getElementsByTagName(
+        //     this.setState({
+        //       catUrl: result.headers.location
+        //     });
+        //   }, (error) => {console.log(error)});
+        this.forceUpdate();
+      }, 10000);
+    }
+    // componentDidMount() {
+    //   fetch("http://thecatapi.com/api/images/get?format=src&type=gif&size=small",
+    //         {mode: 'no-cors'})
+    //   .then(
+    //     (result) => {
+    //       console.log(result);
+    //       this.setState({
+    //         catUrl: result
+    //       });
+    //     }, (error) => {console.log(error)});
+    // }
+    render() {
+      var caturl = "http://thecatapi.com/api/images/get?format=src&type=gif&size=small&foo=" + this.state.catid;
+      return (
+        <img src={caturl}></img>
+      );
+    }
+  }
+
+  ReactDOM.render(<CatShow />, document.getElementById('cats'));
+</script>
 
 
       </div>
